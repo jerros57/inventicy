@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/item_inventario.dart';
 
+import '../widgets/product_card.dart';
 import 'detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -90,106 +91,15 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: _productosPrueba.length,
         itemBuilder: (context, index) {
           final item = _productosPrueba[index];
-          final esStockBajo = item.stock < 5;
-
-          return Card(
-            elevation: 2,
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-              onTap: () => _mostrarDetalles(context, item),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(
-                          Icons.inventory_2,
-                          color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.nombre,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'SKU: ${item.codigoSku} • ${item.categoria}',
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.grey.shade600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        '\$${item.precio.toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                      ),
-                    ],
-                  ),
-                  const Divider(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            esStockBajo
-                                ? Icons.warning_amber_rounded
-                                : Icons.check_circle_outline,
-                            size: 18,
-                            color: esStockBajo ? Colors.orange.shade800 : Colors.green.shade700,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Stock: ${item.stock}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: esStockBajo ? Colors.orange.shade800 : Colors.green.shade700,
-                            ),
-                          ),
-                        ],
-                      ),
-                      FilledButton.tonalIcon(
-                        onPressed: () => _mostrarDetalles(context, item),
-                        icon: const Icon(Icons.info_outline, size: 18),
-                        label: const Text('Ver detalles'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
+          return ProductCard(
+            item: item,
+            onTap: () => _mostrarDetalles(context, item),
+          );
+        },
       ),
     );
   }

@@ -1,73 +1,35 @@
-# Inventicy - MVP Catálogo y Control de Inventario
+# Inventicy - MVP Catálogo y Gestión de Inventario Multiplataforma
 
-> **Actividad Integradora 1** — Desarrollo de Aplicaciones Móviles  
-> **Institución:** Universidad ECOTEC (2026)  
-> **Carrera:** Ingeniería en Sistemas Inteligentes  
-> **Autor:** Jeremy Molina Sánchez  
+**Estudiante:** Jeremy Molina Sánchez  
+**Carrera:** Ingeniería en Sistemas Inteligentes  
+**Asignatura:** Desarrollo de Aplicaciones Móviles  
+**Docente:** Máster Gregorio Cruz G.  
 
 ---
 
 ## 📱 Descripción del Proyecto
+**Inventicy** es un prototipo interactivo (MVP) multiplataforma (Web, Móvil Android y Escritorio Windows ARM64) desarrollado en **Flutter (Dart)** para la catalogación y control ágil de inventario de productos. Su arquitectura está desacoplada y preparada para futuras integraciones con servicios externos mediante API REST.
 
-**Inventicy** es un prototipo interactivo (MVP) multiplataforma (Web y Móvil) desarrollado en **Flutter** con diseño corporativo basado en **Material 3** (paleta tonal Índigo). Su objetivo es proporcionar una solución ágil y moderna para la catalogación, consulta técnica de existencias y control de inventario de productos.
+## 🏛️ Estructura Modular y Componentes (`lib/`)
+* `lib/models/`: Contiene la entidad fuertemente tipada `ItemInventario` con el método constructor `.fromJson()` para consumo futuro de datos remotos.
+* `lib/screens/`: 
+  * `home_screen.dart`: Pantalla principal de catálogo con componentes Material Design 3.
+  * `detail_screen.dart`: Pantalla de detalle técnico y existencias con paso de parámetros por constructor.
+* `lib/widgets/`: 
+  * `product_card.dart`: Componente reutilizable optimizado para la renderización de tarjetas de producto con imágenes en red (`Image.network`) y manejo de estados de stock.
 
----
-
-## 🏛️ Arquitectura de Software Modular
-
-El proyecto implementa una arquitectura desacoplada y organizada en capas bajo el directorio `lib/`:
-
-* **`lib/models/`**:
-  * [`item_inventario.dart`](file:///c:/dev/inventicy/lib/models/item_inventario.dart): Entidad de dominio `ItemInventario` con atributos de negocio (`id`, `codigoSku`, `nombre`, `categoria`, `stock`, `precio`, `descripcion`). Diseñada de manera desacoplada con el constructor factory `ItemInventario.fromJson()` y método `toJson()`, garantizando interoperabilidad inmediata con futuras APIs REST y servicios backend.
-* **`lib/screens/`**:
-  * [`home_screen.dart`](file:///c:/dev/inventicy/lib/screens/home_screen.dart): Catálogo interactivo de productos. Implementa obligatoriamente la jerarquía de widgets: `AppBar` accesible con acciones semánticas, `ListView.builder`, `Card`, `Container`, `Row`, `Column`, `Text`, `Icon` y botón interactivo (`FilledButton.tonalIcon` / `InkWell`).
-  * [`detail_screen.dart`](file:///c:/dev/inventicy/lib/screens/detail_screen.dart): Pantalla de detalle que recibe obligatoriamente la instancia tipada de `ItemInventario`. Presenta tarjeta destacada con precio unitario, indicador visual de existencias en bodega y observaciones de stock.
-* **`lib/widgets/`**:
-  * Estructura modular preparada para la extracción y desacoplamiento de componentes de interfaz reutilizables (tarjetas de producto, badges de inventario y diálogos informativos).
-
----
-
-## 🔄 Flujo de Navegación y Paso de Parámetros
-
-1. **Navegación hacia Adelante (`Navigator.push`)**:
-   Al seleccionar un producto desde el catálogo (ya sea presionando el botón *"Ver detalles"* o pulsando sobre la tarjeta), se ejecuta un `Navigator.push` utilizando `MaterialPageRoute`, inyectando la instancia del modelo `ItemInventario` seleccionado hacia el constructor de `DetailScreen`.
-2. **Retorno Seguro (`Navigator.pop`)**:
-   El `AppBar` de `DetailScreen` dispone de un botón de acción retroceso (`Icons.arrow_back`) que invoca `Navigator.pop(context)`, liberando la ruta de la pila y devolviendo al usuario al estado actual del catálogo.
-
----
-
-## 🧪 Pruebas Automatizadas y Calidad de Código
-
-El proyecto cuenta con validación estricta de análisis estático y pruebas automatizadas:
-
-* **Pruebas de Serialización**: Validación unitaria de deserialización (`fromJson`) y serialización (`toJson`) en [`test/item_inventario_test.dart`](file:///c:/dev/inventicy/test/item_inventario_test.dart).
-* **Pruebas de Widget e Integración**: Smoke test y prueba de flujo completo de navegación catálogo -> detalle -> retorno en [`test/widget_test.dart`](file:///c:/dev/inventicy/test/widget_test.dart).
-* **Estado de Verificación**:
-  * `flutter analyze`: **0 advertencias / 0 errores**.
-  * `flutter test`: **100% de pruebas aprobadas**.
-
----
+## 🔄 Flujo de Navegación y Pruebas
+* **Navegación:** Implementación del flujo de ida y vuelta mediante `Navigator.push` (con inyección de objetos tipados a través de `MaterialPageRoute`) y retorno con `Navigator.pop`.
+* **Calidad de Software:** Validación automatizada de widgets y análisis sintáctico mediante `flutter test` y `flutter analyze` sin errores ni advertencias.
 
 ## 🚀 Instrucciones de Ejecución Local
-
-### Prerrequisitos
-Tener instalado el SDK de Flutter (versión 3.x o superior) y las extensiones correspondientes.
-
-### Comandos de Ejecución
-
 ```bash
-# Obtener dependencias
-flutter pub get
-
-# Ejecución en Navegador Web (Google Chrome / Edge)
+# Ejecutar en navegador web
 flutter run -d chrome
 
-# Ejecución en dispositivo móvil o emulador (Android / iOS)
+# Ejecutar en emulador o dispositivo físico Android
 flutter run
-
-# Ejecución del suite de pruebas automatizadas
-flutter test
-
-# Análisis estático de código
-flutter analyze
 ```
+
+## 🔌 Escalabilidad y Conexión API REST (Arquitectura Futura)
+El diseño desacoplado permite la sincronización con endpoints backend en una fase posterior sin alterar la capa de presentación de la interfaz de usuario.
