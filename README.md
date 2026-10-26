@@ -1,17 +1,25 @@
-# inventicy
+# Inventicy - MVP Catálogo y Gestión de Inventario
 
-A new Flutter project.
+**Autor:** Jeremy Molina Sánchez  
+**Carrera:** Ingeniería en Sistemas Inteligentes  
+**Materia:** Desarrollo de Aplicaciones Móviles  
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📱 Descripción del Proyecto
+Inventicy es un prototipo interactivo (MVP) multiplataforma (Web y Móvil) desarrollado con Flutter para la catalogación y control ágil de inventario de productos.
 
-A few resources to get you started if this is your first Flutter project:
+## 🏛️ Estructura Modular (`lib/`)
+* `lib/models/`: Entidad `ItemInventario` desacoplada con soporte `fromJson` para facilitar el consumo de APIs REST a futuro.
+* `lib/screens/`: 
+  * `home_screen.dart`: Catálogo visual con tarjetas informativas y botones interactivos.
+  * `detail_screen.dart`: Visualización técnica de existencias y detalle de producto.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## 🚀 Ejecución Local
+```bash
+# Para web
+flutter run -d chrome
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Para móvil / emulador
+flutter run
+```

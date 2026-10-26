@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/item_inventario.dart';
 
+import 'detail_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -58,66 +60,10 @@ class HomeScreen extends StatelessWidget {
   ];
 
   void _mostrarDetalles(BuildContext context, ItemInventario item) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Row(
-          children: [
-            const Icon(Icons.inventory_2_outlined, color: Colors.indigo),
-            const SizedBox(width: 8),
-            Expanded(child: Text(item.nombre)),
-          ],
-        ),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.indigo.shade50,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  'SKU: ${item.codigoSku}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.indigo.shade900,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text('Categoría: ${item.categoria}'),
-              const SizedBox(height: 6),
-              Text(
-                'Precio: \$${item.precio.toStringAsFixed(2)}',
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                'Stock disponible: ${item.stock} unidades',
-                style: TextStyle(
-                  color: item.stock < 5 ? Colors.red.shade700 : Colors.green.shade700,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Descripción:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 4),
-              Text(item.descripcion),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Cerrar'),
-          ),
-        ],
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailScreen(item: item),
       ),
     );
   }

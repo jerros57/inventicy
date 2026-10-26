@@ -3,25 +3,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inventicy/main.dart';
 
 void main() {
-  testWidgets('InventicyApp smoke test and details modal', (WidgetTester tester) async {
+  testWidgets('InventicyApp smoke test and navigation to DetailScreen', (WidgetTester tester) async {
     await tester.pumpWidget(const InventicyApp());
 
-    // Verifica que el catálogo y el AppBar carguen
+    // 1. Verifica que el catálogo y el AppBar carguen
     expect(find.text('Inventicy - Catálogo'), findsOneWidget);
     expect(find.text('Laptop Pro 15 Ultra'), findsOneWidget);
 
-    // Encuentra el botón "Ver detalles" y lo presiona
+    // 2. Encuentra el botón "Ver detalles" y navega a DetailScreen
     final detalleButton = find.widgetWithText(FilledButton, 'Ver detalles').first;
     expect(detalleButton, findsOneWidget);
     await tester.tap(detalleButton);
     await tester.pumpAndSettle();
 
-    // Verifica que el modal muestre la información detallada
-    expect(find.text('SKU: LAP-001'), findsOneWidget);
-    expect(find.text('Cerrar'), findsOneWidget);
+    // 3. Verifica los elementos de DetailScreen
+    expect(find.text('Detalle: LAP-001'), findsOneWidget);
+    expect(find.text('Información de Existencias:'), findsOneWidget);
+    expect(find.text('Unidades en bodega: 12'), findsOneWidget);
+    expect(find.text('Observaciones de Stock:'), findsOneWidget);
 
-    // Cierra el modal
-    await tester.tap(find.text('Cerrar'));
+    // 4. Presiona el botón de retroceso (arrow_back)
+    final backButton = find.byIcon(Icons.arrow_back);
+    expect(backButton, findsOneWidget);
+    await tester.tap(backButton);
     await tester.pumpAndSettle();
+
+    // 5. Confirma retorno a HomeScreen
+    expect(find.text('Inventicy - Catálogo'), findsOneWidget);
   });
 }
