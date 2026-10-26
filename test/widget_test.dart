@@ -16,11 +16,17 @@ void main() {
     await tester.tap(detalleButton);
     await tester.pumpAndSettle();
 
-    // 3. Verifica los elementos de DetailScreen
+    // 3. Verifica que DetailScreen reciba el producto y muestre título, precio, stock y descripción
     expect(find.text('Detalle: LAP-001'), findsOneWidget);
-    expect(find.text('Información de Existencias:'), findsOneWidget);
+    expect(find.text('Laptop Pro 15 Ultra'), findsOneWidget);
+    expect(find.text('Precio unitario: \$1299.99'), findsOneWidget);
     expect(find.text('Unidades en bodega: 12'), findsOneWidget);
-    expect(find.text('Observaciones de Stock:'), findsOneWidget);
+    expect(
+      find.text(
+        'Portátil de alto rendimiento con procesador octa-core y 16GB RAM para tareas profesionales.',
+      ),
+      findsOneWidget,
+    );
 
     // 4. Presiona el botón de retroceso (arrow_back)
     final backButton = find.byIcon(Icons.arrow_back);
