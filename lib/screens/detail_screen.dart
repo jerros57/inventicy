@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import '../models/item_inventario.dart';
 import '../services/media_service.dart';
+import '../services/notification_service.dart';
 
 class DetailScreen extends StatefulWidget {
   final ItemInventario item;
@@ -14,7 +15,26 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   final MediaService _mediaService = MediaService();
+  final NotificationService _notificationService = NotificationService();
   Uint8List? _customImageBytes;
+
+  Future<void> _dispararAlertaStock() async {
+    await _notificationService.mostrarNotificacion(
+      titulo: 'Alerta de Stock Crítico: ${widget.item.nombre}',
+      cuerpo:
+          'Unidades bajas en bodega (${widget.item.stock} disponibles). SKU: ${widget.item.codigoSku}.',
+      id: widget.item.id.hashCode,
+    );
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Notificación de alerta enviada al sistema nativo'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Color(0xFF0D9488),
+      ),
+    );
+  }
 
   Future<void> _handleCameraSelection() async {
     Navigator.of(context).pop(); // Cierra el BottomSheet
@@ -236,6 +256,13 @@ class _DetailScreenState extends State<DetailScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_active_outlined),
+            tooltip: 'Alerta de Stock Crítico',
+            onPressed: _dispararAlertaStock,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -421,6 +448,27 @@ class _DetailScreenState extends State<DetailScreen> {
             Text(
               widget.item.descripcion,
               style: const TextStyle(fontSize: 14, height: 1.4),
+            ),
+
+            const SizedBox(height: 24),
+
+            // Botón interactivo para disparar notificación de alerta
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.tonalIcon(
+                onPressed: _dispararAlertaStock,
+                icon: const Icon(Icons.notifications_active_outlined, size: 20),
+                label: const Text('Disparar Alerta de Stock Crítico'),
+                style: FilledButton.styleFrom(
+                  backgroundColor:
+                      const Color(0xFFDC2626).withValues(alpha: 0.12),
+                  foregroundColor: const Color(0xFFDC2626),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
             ),
 
             const SizedBox(height: 40),

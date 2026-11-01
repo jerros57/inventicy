@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'screens/splash_screen.dart';
 
-void main() {
+import 'screens/splash_screen.dart';
+import 'services/notification_service.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initialize();
   runApp(const StockFlowProApp());
 }
 
