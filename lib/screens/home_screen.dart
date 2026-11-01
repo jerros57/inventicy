@@ -5,10 +5,23 @@ import '../widgets/offline_banner.dart';
 import '../widgets/product_card.dart';
 import 'detail_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  static const List<ItemInventario> _productosPrueba = [
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late List<ItemInventario> _productosPrueba;
+
+  @override
+  void initState() {
+    super.initState();
+    _productosPrueba = List.from(_productosIniciales);
+  }
+
+  static const List<ItemInventario> _productosIniciales = [
     ItemInventario(
       id: '1',
       codigoSku: 'LAP-001',
@@ -18,6 +31,8 @@ class HomeScreen extends StatelessWidget {
       precio: 1299.99,
       descripcion:
           'Portátil de alto rendimiento con procesador octa-core y 16GB RAM para tareas profesionales.',
+      imageUrl:
+          'https://res.cloudinary.com/dgv0mdsb/image/upload/c_fill,w_300,h_300,q_auto,f_auto/v1/samples/ecommerce/laptop.jpg',
     ),
     ItemInventario(
       id: '2',
@@ -28,6 +43,8 @@ class HomeScreen extends StatelessWidget {
       precio: 349.50,
       descripcion:
           'Monitor IPS con resolución 4K, tasa de refresco 75Hz y calibración de color profesional.',
+      imageUrl:
+          'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=300',
     ),
     ItemInventario(
       id: '3',
@@ -38,6 +55,8 @@ class HomeScreen extends StatelessWidget {
       precio: 89.90,
       descripcion:
           'Teclado mecánico con switches táctiles, retroiluminación RGB configurable y cable trenzado.',
+      imageUrl:
+          'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300',
     ),
     ItemInventario(
       id: '4',
@@ -48,6 +67,8 @@ class HomeScreen extends StatelessWidget {
       precio: 45.00,
       descripcion:
           'Mouse vertical diseñado para reducir la fatiga en la muñeca con sensor óptico de alta precisión.',
+      imageUrl:
+          'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300',
     ),
     ItemInventario(
       id: '5',
@@ -58,16 +79,26 @@ class HomeScreen extends StatelessWidget {
       precio: 119.00,
       descripcion:
           'Auriculares con cancelación activa de ruido, micrófono con IA y batería de hasta 30 horas.',
+      imageUrl:
+          'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300',
     ),
   ];
 
-  void _mostrarDetalles(BuildContext context, ItemInventario item) {
-    Navigator.push(
+  Future<void> _mostrarDetalles(BuildContext context, ItemInventario item) async {
+    final nuevaImagen = await Navigator.push<String>(
       context,
-      MaterialPageRoute(
-        builder: (context) => DetailScreen(item: item),
-      ),
+      MaterialPageRoute(builder: (context) => DetailScreen(item: item)),
     );
+
+    if (nuevaImagen != null && nuevaImagen != item.imageUrl && mounted) {
+      setState(() {
+        final index = _productosPrueba.indexWhere((p) => p.id == item.id);
+        if (index != -1) {
+          _productosPrueba[index] =
+              _productosPrueba[index].copyWith(imageUrl: nuevaImagen);
+        }
+      });
+    }
   }
 
   @override

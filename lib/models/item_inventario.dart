@@ -6,6 +6,7 @@ class ItemInventario {
   final int stock;
   final double precio;
   final String descripcion;
+  final String? imageUrl;
 
   const ItemInventario({
     required this.id,
@@ -15,6 +16,7 @@ class ItemInventario {
     required this.stock,
     required this.precio,
     required this.descripcion,
+    this.imageUrl,
   });
 
   /// Factory desacoplado para deserialización de JSON (compatible con APIs REST).
@@ -27,6 +29,7 @@ class ItemInventario {
       stock: (json['stock'] as num?)?.toInt() ?? 0,
       precio: (json['precio'] as num?)?.toDouble() ?? 0.0,
       descripcion: json['descripcion'] as String? ?? '',
+      imageUrl: json['imageUrl'] as String? ?? json['image_url'] as String?,
     );
   }
 
@@ -40,6 +43,30 @@ class ItemInventario {
       'stock': stock,
       'precio': precio,
       'descripcion': descripcion,
+      if (imageUrl != null) 'imageUrl': imageUrl,
     };
+  }
+
+  /// Genera una copia de la entidad modificando únicamente los campos especificados.
+  ItemInventario copyWith({
+    String? id,
+    String? codigoSku,
+    String? nombre,
+    String? categoria,
+    int? stock,
+    double? precio,
+    String? descripcion,
+    String? imageUrl,
+  }) {
+    return ItemInventario(
+      id: id ?? this.id,
+      codigoSku: codigoSku ?? this.codigoSku,
+      nombre: nombre ?? this.nombre,
+      categoria: categoria ?? this.categoria,
+      stock: stock ?? this.stock,
+      precio: precio ?? this.precio,
+      descripcion: descripcion ?? this.descripcion,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
   }
 }
