@@ -73,7 +73,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inventicy - Catálogo'),
+        title: const Text('StockFlow Pro - Catálogo'),
         elevation: 1,
         actions: [
           IconButton(

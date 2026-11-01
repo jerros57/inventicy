@@ -1,6 +1,6 @@
 {
-    "name": "inventicy",
-    "short_name": "inventicy",
+    "name": "StockFlow Pro",
+    "short_name": "StockFlow Pro",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
