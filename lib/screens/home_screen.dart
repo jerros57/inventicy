@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/item_inventario.dart';
 
+import '../widgets/offline_banner.dart';
 import '../widgets/product_card.dart';
 import 'detail_screen.dart';
 
@@ -90,16 +91,23 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        itemCount: _productosPrueba.length,
-        itemBuilder: (context, index) {
-          final item = _productosPrueba[index];
-          return ProductCard(
-            item: item,
-            onTap: () => _mostrarDetalles(context, item),
-          );
-        },
+      body: Column(
+        children: [
+          const OfflineBanner(),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              itemCount: _productosPrueba.length,
+              itemBuilder: (context, index) {
+                final item = _productosPrueba[index];
+                return ProductCard(
+                  item: item,
+                  onTap: () => _mostrarDetalles(context, item),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
