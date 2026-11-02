@@ -549,7 +549,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
 
-              const SizedBox(height: 40),
+              // Espacio de separación para evitar solapamiento con el FAB extendido
+              const SizedBox(height: 80),
             ],
           ),
         ),
