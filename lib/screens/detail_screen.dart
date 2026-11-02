@@ -59,6 +59,7 @@ class DetailScreen extends StatelessWidget {
                   item.stock > 5 ? Icons.check_circle_outline : Icons.warning_amber_rounded,
                   color: item.stock > 5 ? Colors.green : Colors.orange,
                 ),
+<<<<<<< Updated upstream
                 const SizedBox(width: 8),
                 Text('Unidades en bodega: ${item.stock}', style: const TextStyle(fontSize: 15)),
               ],
@@ -71,6 +72,48 @@ class DetailScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(item.descripcion, style: const TextStyle(fontSize: 14, height: 1.4)),
           ],
+=======
+              ),
+              const SizedBox(height: 8),
+              Text(
+                widget.item.descripcion,
+                style: const TextStyle(fontSize: 14, height: 1.4),
+              ),
+
+              const SizedBox(height: 24),
+
+              // Botón interactivo para disparar notificación de alerta
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.tonalIcon(
+                  onPressed: _dispararAlertaStock,
+                  icon:
+                      const Icon(Icons.notifications_active_outlined, size: 20),
+                  label: const Text('Disparar Alerta de Stock Crítico'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor:
+                        const Color(0xFFDC2626).withValues(alpha: 0.12),
+                    foregroundColor: const Color(0xFFDC2626),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Espacio de separación para evitar solapamiento con el FAB extendido
+              const SizedBox(height: 80),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: _showMediaSourceBottomSheet,
+          backgroundColor: secondaryTeal,
+          foregroundColor: Colors.white,
+          icon: const Icon(Icons.camera_alt_outlined),
+          label: const Text('Cambiar foto del producto'),
+>>>>>>> Stashed changes
         ),
       ),
     );
